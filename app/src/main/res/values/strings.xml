@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RandomNameNorsk</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_closing_warning">The application requires permissions to initialize the random name generator</string>
+    <string name="give_permission">Give permissions</string>
+    <string name="male_names">maleNames.csv</string>
+    <string name="male_download_description">Fornavn for menn brukt til å genere tilfledige navn</string>
+    <string name="male_download_title">Fornavn for menn</string>
+    <string name="male_download_uri">https://www.ssb.no/eksport/tabell.csv?key=337890</string>
+    <string name="female_names">femaleNames.csv</string>
+    <string name="female_download_description">Fornavn for kvinner brukt til å genere tilfledige navn</string>
+    <string name="female_download_title">Fornavn for kvinner</string>
+    <string name="female_download_uri">https://www.ssb.no/eksport/tabell.csv?key=337884</string>
+    <string name="last_names">lastNames.csv</string>
+    <string name="lastname_download_description">Etternavn brukt til å genere tilfledige navn</string>
+    <string name="lastname_download_title">Etternavn lastet ned</string>
+    <string name="lastname_download_uri">https://www.ssb.no/eksport/tabell.csv?key=337917</string>
+</resources>
