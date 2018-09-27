@@ -11,8 +11,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:layout_editor_absoluteY="62dp"
-            tools:layout_editor_absoluteX="16dp">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp">
 
         <RadioGroup
                 android:layout_width="match_parent"
@@ -71,10 +77,6 @@
                 android:id="@+id/generationButton"
                 android:elevation="0dp"
                 android:onClick="generateNames"/>
-
-        <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
