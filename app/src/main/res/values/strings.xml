@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">RandomNameNorsk</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_closing_warning">The application requires permissions to initialize the random name generator</string>
     <string name="give_permission">Give permissions</string>
     <string name="male_names">maleNames.csv</string>
@@ -17,4 +14,16 @@
     <string name="lastname_download_description">Etternavn brukt til å genere tilfledige navn</string>
     <string name="lastname_download_title">Etternavn lastet ned</string>
     <string name="lastname_download_uri">https://www.ssb.no/eksport/tabell.csv?key=337917</string>
+    <string name="number_picker_help_text">Enter number of names to generate</string>
+    <string name="default_number_names">5</string>
+    <string name="title_activity_name_generation">name_generation</string>
+    <string name="name_generation_button_text">Name generation</string>
+    <string name="dm_tools_button_text">Dungeon master tools</string>
+    <string name="player_tools_button_text">Player tools</string>
+    <string name="spell_save_button">Save</string>
+    <string name="hint_spell">Spell...</string>
+    <string name="spell_not_saved">Spell has not been saved</string>
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="action_spell_search">Search for a spell by name</string>
 </resources>

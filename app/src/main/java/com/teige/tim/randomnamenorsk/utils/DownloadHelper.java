@@ -1,4 +1,4 @@
-package com.teige.tim.randomnamenorsk;
+package com.teige.tim.randomnamenorsk.utils;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -16,6 +16,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import com.teige.tim.randomnamenorsk.BuildConfig;
+import com.teige.tim.randomnamenorsk.R;
 
 import java.io.*;
 import java.util.ArrayList;
