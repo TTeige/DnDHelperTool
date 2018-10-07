@@ -26,4 +26,8 @@
     <string name="favorite">Favorite</string>
     <string name="settings">Settings</string>
     <string name="action_spell_search">Search for a spell by name</string>
+    <string name="spell_cast_time_placeholder">Casting time: %1$s</string>
+    <string name="spell_duration_placeholder">Duration: %1$s</string>
+    <string name="spell_components_placeholder">Components: %1$s</string>
+    <string name="spell_range_placeholder">Range: %1$s</string>
 </resources>

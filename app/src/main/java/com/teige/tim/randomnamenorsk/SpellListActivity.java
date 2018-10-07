@@ -11,19 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import com.teige.tim.randomnamenorsk.db.entity.Spell;
 import com.teige.tim.randomnamenorsk.views.RecycleSpellListAdapter;
 import com.teige.tim.randomnamenorsk.views.SpellViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +38,7 @@ public class SpellListActivity extends AppCompatActivity {
 
         RecyclerView spellListView = findViewById(R.id.spell_list_view);
         adapter = new RecycleSpellListAdapter(this);
+//        ((SimpleItemAnimator)spellListView.getItemAnimator()).setSupportsChangeAnimations(false);
         spellListView.setAdapter(adapter);
         spellListView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -75,26 +71,14 @@ public class SpellListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                List<Spell> spellList = filter(spellViewModel.getSpells(), query);
-                adapter.replaceAll(spellList);
-
+                if (query != null || !query.equals("")) {
+                    adapter.setSpellList(spellViewModel.searchByName(query));
+                }
                 return true;
             }
         });
 
         return true;
-    }
-
-    private List<Spell> filter(LiveData<List<Spell>> spells, String query) {
-        String lowerCaseQuery = query.toLowerCase();
-        List<Spell> filteredSpells = new ArrayList<>();
-        for (Spell spell : Objects.requireNonNull(spells.getValue())) {
-            String name = spell.getName().toLowerCase();
-            if (name.contains(lowerCaseQuery)) {
-                filteredSpells.add(spell);
-            }
-        }
-        return filteredSpells;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

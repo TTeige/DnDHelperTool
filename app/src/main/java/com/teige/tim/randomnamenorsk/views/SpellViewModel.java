@@ -28,4 +28,8 @@ public class SpellViewModel extends AndroidViewModel {
     public void insert(Spell spell) {
         spellRepository.insert(spell);
     }
+
+    public List<Spell> searchByName(String query) {
+        return spellRepository.searchByName(query);
+    }
 }
