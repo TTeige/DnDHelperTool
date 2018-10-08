@@ -2,7 +2,6 @@ package com.teige.tim.randomnamenorsk.db.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "character_class_spell", primaryKeys = {"spell_name", "class"})

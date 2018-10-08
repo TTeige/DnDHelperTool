@@ -3,6 +3,7 @@ package com.teige.tim.randomnamenorsk.db;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import com.teige.tim.randomnamenorsk.R;
 import com.teige.tim.randomnamenorsk.db.dao.SpellDao;
 import com.teige.tim.randomnamenorsk.db.entity.Spell;
 
@@ -44,9 +45,14 @@ public class SpellRepository {
         new insertAsyncTask(spellDao).execute(spell);
     }
 
-    public LiveData<List<Spell>> searchByName(String query) {
-        query = "%" + query + "%";
-        return spellDao.searchByName(query);
+    public LiveData<List<Spell>> searchByName(String query, String characterClass) {
+        query = query + "%";
+        if (characterClass.equals("All classes")) {
+            return spellDao.searchByName(query);
+        } else {
+            characterClass = characterClass + "%";
+            return spellDao.searchByNameAndClass(query, characterClass);
+        }
     }
 
     public LiveData<List<Spell>> searchByClass(String className) {

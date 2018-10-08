@@ -28,6 +28,7 @@ public class SpellListActivity extends AppCompatActivity {
     public static final int NEW_SPELL_ACTIVITY_REQUEST_CODE = 1;
     private RecycleSpellListAdapter adapter;
     private SpellViewModel spellViewModel;
+    private String characterClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,11 @@ public class SpellListActivity extends AppCompatActivity {
         spellListView.setLayoutManager(new LinearLayoutManager(this));
 
         Intent startIntent = getIntent();
-        String classButtonString = startIntent.getStringExtra("CLASS");
+        characterClass = startIntent.getStringExtra("CLASS");
         spellViewModel = ViewModelProviders.of(this).get(SpellViewModel.class);
 
-        if (!classButtonString.equals(getString(R.string.spell_item_class_button_all))) {
-            spellViewModel.searchByClass(classButtonString).observe(this, new Observer<List<Spell>>() {
+        if (!characterClass.equals(getString(R.string.spell_item_class_button_all))) {
+            spellViewModel.searchByClass(characterClass).observe(this, new Observer<List<Spell>>() {
                 @Override
                 public void onChanged(@Nullable List<Spell> spells) {
                     adapter.add(spells);
@@ -83,7 +84,7 @@ public class SpellListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                spellViewModel.searchByName(query).observe(SpellListActivity.this, new Observer<List<Spell>>() {
+                spellViewModel.searchByName(query, characterClass).observe(SpellListActivity.this, new Observer<List<Spell>>() {
                     @Override
                     public void onChanged(@Nullable List<Spell> spells) {
                         if (spells == null) {

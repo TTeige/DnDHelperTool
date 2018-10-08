@@ -29,8 +29,8 @@ public class SpellViewModel extends AndroidViewModel {
         spellRepository.insert(spell);
     }
 
-    public LiveData<List<Spell>> searchByName(String query) {
-        return spellRepository.searchByName(query);
+    public LiveData<List<Spell>> searchByName(String query, String characterClass) {
+        return spellRepository.searchByName(query, characterClass);
     }
 
     public LiveData<List<Spell>> searchByClass(String className) {

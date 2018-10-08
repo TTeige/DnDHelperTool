@@ -27,6 +27,15 @@ public interface SpellDao {
     @Query("SELECT * FROM SPELL_TABLE WHERE name LIKE :query ORDER BY lvl DESC")
     LiveData<List<Spell>> searchByName(String query);
 
+    @Query("SELECT * FROM " +
+            "(SELECT * FROM spell_table join " +
+            "(select * from character_class_spell " +
+            "where class like :characterClass) as a " +
+            "on spell_table.name = a.spell_name) as b " +
+            "WHERE b.name like :query " +
+            "ORDER BY b.lvl DESC")
+    LiveData<List<Spell>> searchByNameAndClass(String query, String characterClass);
+
     @Query("select * from spell_table " +
             "JOIN character_class_spell " +
             "ON spell_table.name = character_class_spell.spell_name " +
