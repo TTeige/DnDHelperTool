@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.teige.tim.randomnamenorsk.R;
 import com.teige.tim.randomnamenorsk.db.entity.Spell;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class RecycleSpellListAdapter extends RecyclerView.Adapter<RecycleSpellListAdapter.SpellViewHolder> {
@@ -69,6 +69,16 @@ public class RecycleSpellListAdapter extends RecyclerView.Adapter<RecycleSpellLi
 
     public void add(Spell spell) {
         spellList.add(spell);
+        notifyDataSetChanged();
+    }
+
+    public void add(Collection<Spell> spells) {
+        if (spellList == null) {
+            spellList = (List<Spell>)spells;
+        } else {
+            spellList.addAll(spells);
+        }
+        notifyDataSetChanged();
     }
 
 

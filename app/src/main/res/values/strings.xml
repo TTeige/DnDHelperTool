@@ -30,4 +30,13 @@
     <string name="spell_duration_placeholder">Duration: %1$s</string>
     <string name="spell_components_placeholder">Components: %1$s</string>
     <string name="spell_range_placeholder">Range: %1$s</string>
+    <string name="spell_item_class_button_bard">Bard</string>
+    <string name="spell_item_class_button_cleric">Cleric</string>
+    <string name="spell_item_class_button_druid">Druid</string>
+    <string name="spell_item_class_button_paladin">Paladin</string>
+    <string name="spell_item_class_button_ranger">Ranger</string>
+    <string name="spell_item_class_button_sorcerer">Sorcerer</string>
+    <string name="spell_item_class_button_warlock">Warlock</string>
+    <string name="spell_item_class_button_wizard">Wizard</string>
+    <string name="spell_item_class_button_all">All classes</string>
 </resources>

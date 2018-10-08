@@ -8,26 +8,30 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import com.teige.tim.randomnamenorsk.db.dao.CharacterClassSpellDao;
+import com.teige.tim.randomnamenorsk.db.dao.CharacterClassDao;
 import com.teige.tim.randomnamenorsk.db.dao.SpellDao;
+import com.teige.tim.randomnamenorsk.db.entity.CharacterClass;
+import com.teige.tim.randomnamenorsk.db.entity.CharacterClassSpell;
 import com.teige.tim.randomnamenorsk.db.entity.Spell;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
-@Database(entities = {Spell.class}, version = 1)
-public abstract class SpellDatabase extends RoomDatabase {
+@Database(entities = {Spell.class, CharacterClass.class, CharacterClassSpell.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
     public abstract SpellDao spellDao();
+    public abstract CharacterClassDao classDao();
+    public abstract CharacterClassSpellDao characterClassSpellDao();
 
-    private static volatile SpellDatabase INSTANCE;
+    private static volatile AppDatabase INSTANCE;
 
-    static SpellDatabase getDatabase(final Context context) {
+    static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (SpellDatabase.class) {
+            synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            SpellDatabase.class, "spell_database").addCallback(
+                            AppDatabase.class, "app_database").addCallback(
                             new RoomDatabase.Callback(){
 
                                 @Override
@@ -87,22 +91,32 @@ public abstract class SpellDatabase extends RoomDatabase {
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final SpellDao spellDao;
+        private final CharacterClassDao characterClassDao;
+        private final CharacterClassSpellDao classSpellDao;
         private final InputStream stream;
 
-        PopulateDbAsync(SpellDatabase db, InputStream stream) {
+        PopulateDbAsync(AppDatabase db, InputStream stream) {
             spellDao = db.spellDao();
+            characterClassDao = db.classDao();
+            classSpellDao = db.characterClassSpellDao();
             this.stream = stream;
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            spellDao.deleteAll();
             DataInputStream data = new DataInputStream(stream);
             BufferedReader bData = new BufferedReader(new InputStreamReader(data, StandardCharsets.ISO_8859_1));
             String line;
             try {
                 while ((line = bData.readLine()) != null) {
-                    spellDao.insert(new Spell(line));
+                    Spell spell = new Spell(line);
+                    spellDao.insert(spell);
+                    String[] split = line.split(";");
+                    CharacterClass characterClass = new CharacterClass(split[8]);
+                    characterClassDao.insert(characterClass);
+                    classSpellDao.insert(new CharacterClassSpell(spell.getName(),
+                            characterClass.getCharacterClass()));
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();

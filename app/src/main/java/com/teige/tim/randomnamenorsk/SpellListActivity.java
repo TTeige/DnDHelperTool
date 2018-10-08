@@ -1,9 +1,7 @@
 package com.teige.tim.randomnamenorsk;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.*;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,21 +35,32 @@ public class SpellListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spell_list);
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
-//        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         RecyclerView spellListView = findViewById(R.id.spell_list_view);
         adapter = new RecycleSpellListAdapter(this);
-//        ((SimpleItemAnimator)spellListView.getItemAnimator()).setSupportsChangeAnimations(false);
         spellListView.setAdapter(adapter);
         spellListView.setLayoutManager(new LinearLayoutManager(this));
 
+        Intent startIntent = getIntent();
+        String classButtonString = startIntent.getStringExtra("CLASS");
         spellViewModel = ViewModelProviders.of(this).get(SpellViewModel.class);
-        spellViewModel.getSpells().observe(this, new Observer<List<Spell>>() {
-            @Override
-            public void onChanged(@Nullable List<Spell> spells) {
-                adapter.setSpellList(spells);
-            }
-        });
+
+        if (!classButtonString.equals(getString(R.string.spell_item_class_button_all))) {
+            spellViewModel.searchByClass(classButtonString).observe(this, new Observer<List<Spell>>() {
+                @Override
+                public void onChanged(@Nullable List<Spell> spells) {
+                    adapter.add(spells);
+                }
+            });
+        } else {
+            spellViewModel.getSpells().observe(this, new Observer<List<Spell>>() {
+                @Override
+                public void onChanged(@Nullable List<Spell> spells) {
+                    adapter.add(spells);
+                }
+            });
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.new_spell_fab);
         fab.setOnClickListener(view -> {
@@ -71,9 +83,15 @@ public class SpellListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                if (query != null || !query.equals("")) {
-                    adapter.setSpellList(spellViewModel.searchByName(query));
-                }
+                spellViewModel.searchByName(query).observe(SpellListActivity.this, new Observer<List<Spell>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Spell> spells) {
+                        if (spells == null) {
+                            return;
+                        }
+                        adapter.setSpellList(spells);
+                    }
+                });
                 return true;
             }
         });
@@ -97,8 +115,7 @@ public class SpellListActivity extends AppCompatActivity {
                     extras.getString("range"),
                     extras.getString("components"),
                     extras.getString("duration"),
-                    extras.getString("description"),
-                    extras.getString("characterClass")
+                    extras.getString("description")
             );
 
             spellViewModel.insert(spell);

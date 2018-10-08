@@ -29,7 +29,11 @@ public class SpellViewModel extends AndroidViewModel {
         spellRepository.insert(spell);
     }
 
-    public List<Spell> searchByName(String query) {
+    public LiveData<List<Spell>> searchByName(String query) {
         return spellRepository.searchByName(query);
+    }
+
+    public LiveData<List<Spell>> searchByClass(String className) {
+        return spellRepository.searchByClass(className);
     }
 }

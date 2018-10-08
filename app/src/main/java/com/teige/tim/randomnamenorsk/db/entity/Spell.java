@@ -1,10 +1,10 @@
 package com.teige.tim.randomnamenorsk.db.entity;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.*;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = "spell_table")
@@ -28,12 +28,21 @@ public class Spell {
     String duration;
     @ColumnInfo(name = "description")
     String description;
-    @ColumnInfo(name = "class")
-    String characterClass;
+    @ColumnInfo(name = "classes")
+    @Ignore
+    private boolean expanded;
+
+    public boolean getExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
 
     public Spell(Integer level, @NonNull String name, String type,
                  String castTime, String range, String components,
-                 String duration, String description, String characterClass) {
+                 String duration, String description) {
         this.level = level;
         this.name = name;
         this.type = type;
@@ -42,7 +51,7 @@ public class Spell {
         this.components = components;
         this.duration = duration;
         this.description = description;
-        this.characterClass = characterClass;
+        expanded = false;
     }
 
 
@@ -56,7 +65,7 @@ public class Spell {
         components = split[5];
         duration = split[6];
         description = split[7];
-        characterClass = split[8];
+        expanded = false;
     }
 
     public Integer getLevel() {
@@ -122,14 +131,6 @@ public class Spell {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCharacterClass() {
-        return characterClass;
-    }
-
-    public void setCharacterClass(String characterClass) {
-        this.characterClass = characterClass;
     }
 
     public boolean equals(Object o) {

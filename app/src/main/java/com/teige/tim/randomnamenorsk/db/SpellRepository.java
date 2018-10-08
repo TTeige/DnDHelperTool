@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import com.teige.tim.randomnamenorsk.db.dao.SpellDao;
 import com.teige.tim.randomnamenorsk.db.entity.Spell;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class SpellRepository {
 
@@ -29,7 +31,7 @@ public class SpellRepository {
     }
 
     public SpellRepository(Application application) {
-        SpellDatabase db = SpellDatabase.getDatabase(application);
+        AppDatabase db = AppDatabase.getDatabase(application);
         spellDao = db.spellDao();
         allSpells = spellDao.getAll();
     }
@@ -40,6 +42,16 @@ public class SpellRepository {
 
     public void insert(Spell spell) {
         new insertAsyncTask(spellDao).execute(spell);
+    }
+
+    public LiveData<List<Spell>> searchByName(String query) {
+        query = "%" + query + "%";
+        return spellDao.searchByName(query);
+    }
+
+    public LiveData<List<Spell>> searchByClass(String className) {
+        className = "%" + className + "%";
+        return spellDao.searchByClass(className);
     }
 
 }

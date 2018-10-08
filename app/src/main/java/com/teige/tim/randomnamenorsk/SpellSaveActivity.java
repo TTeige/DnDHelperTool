@@ -90,7 +90,7 @@ public class SpellSaveActivity extends AppCompatActivity {
         String description = editDescription.getText().toString();
         String characterClass = editCharacterClass.getText().toString();
 
-        Spell spell = new Spell(Integer.parseInt(lvl), title, type, castTime, range, components, duration, description, characterClass);
+        Spell spell = new Spell(Integer.parseInt(lvl), title, type, castTime, range, components, duration, description);
         replyIntent.putExtra("lvl", lvl);
         replyIntent.putExtra("title", title);
         replyIntent.putExtra("type", type);
